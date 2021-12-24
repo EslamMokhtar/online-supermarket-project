@@ -113,7 +113,7 @@ const CartModal = (props) => {
     let response;
 
     try {
-      response = await axios.post("http://127.0.0.1:5000/api/orders/", {
+      response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/orders/`, {
         id: ctxAuth.uid,
         items: ctx.cartItems,
         total: total,

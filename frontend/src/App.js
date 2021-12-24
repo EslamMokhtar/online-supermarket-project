@@ -24,6 +24,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Loading from "./shared/components/Navigation/Loading";
 
+
 const theme = createTheme();
 let first = true;
 let logoutTimer;
@@ -50,7 +51,7 @@ const App = () => {
       let response;
       try {
         const storedData = JSON.parse(localStorage.getItem("userData"));
-        const url = `http://127.0.0.1:5000/api/users/check`;
+        const url = `${process.env.REACT_APP_BACKEND_URL}/users/check`;
         response = await axios.get(url, {
           headers: {
             Authorization: "Bearer " + storedData.token,
@@ -88,7 +89,7 @@ const App = () => {
 
   const connectToDb = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/api/products/");
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/products/`);
 
       setProducts(response.data.products);
       setProduct(response.data.products);
@@ -100,7 +101,7 @@ const App = () => {
   };
 
   const getOrders = React.useCallback(async () => {
-    const url = `http://127.0.0.1:5000/api/orders/${uid}`;
+    const url = `${process.env.REACT_APP_BACKEND_URL}/orders/${uid}`;
     const response = await axios.get(url, {
       headers: {
         Authorization: "Bearer " + token,
@@ -141,7 +142,7 @@ const App = () => {
     let response;
     try {
       response = await axios.patch(
-        `http://127.0.0.1:5000/api/products/${product._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/products/${product._id}`,
         {
           ...product,
         },
@@ -186,7 +187,7 @@ const App = () => {
     let response;
     try {
       response = await axios.delete(
-        `http://127.0.0.1:5000/api/products/${id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/products/${id}`,
         {
           headers: {
             Authorization: "Bearer " + ctxAuth.token,
