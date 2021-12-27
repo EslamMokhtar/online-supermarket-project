@@ -11,6 +11,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { NavLink, useParams } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 const drawerWidth = 300;
 
@@ -104,11 +105,13 @@ export default function SideDrawer(props) {
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <MuiDrawer variant="temporary" open={open} onClose={handleDrawerClose}>
           <DrawerHeader>
-            {!open ? (
-              <ChevronRightIcon onClick={handleDrawerOpen} sx={{ m: "5px" }} />
-            ) : (
-              <ChevronLeftIcon onClick={handleDrawerClose} sx={{ m: "5px" }} />
-            )}
+            <IconButton>
+              {!open ? (
+                <ChevronRightIcon onClick={handleDrawerOpen} />
+              ) : (
+                <ChevronLeftIcon onClick={handleDrawerClose} />
+              )}
+            </IconButton>
           </DrawerHeader>
           <Divider />
 
@@ -205,11 +208,13 @@ export default function SideDrawer(props) {
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          {!open ? (
-            <ChevronRightIcon onClick={handleDrawerOpen} sx={{ m: "5px" }} />
-          ) : (
-            <ChevronLeftIcon onClick={handleDrawerClose} sx={{ m: "5px" }} />
-          )}
+          <IconButton>
+            {!open ? (
+              <ChevronRightIcon onClick={handleDrawerOpen} />
+            ) : (
+              <ChevronLeftIcon onClick={handleDrawerClose} />
+            )}
+          </IconButton>
         </DrawerHeader>
         <Divider />
 
