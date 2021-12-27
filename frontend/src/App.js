@@ -1,21 +1,21 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Orders from "./user/pages/Orders";
-import Order from "./user/pages/Order";
-import Products from "./products/pages/Products";
 import "./App.css";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SideDrwaer from "./shared/components/Navigation/SideDrawer";
 import { Fragment } from "react";
 import Grid from "@mui/material/Grid";
-import Login from "./auth/pages/Login";
-import CreateAccount from "./auth/pages/CreateAccount";
-import AddProduct from "./products/pages/AddProduct";
+// import Login from "./auth/pages/Login";
+// import Orders from "./user/pages/Orders";
+// import Products from "./products/pages/Products";
+// import Order from "./user/pages/Order";
+// import CreateAccount from "./auth/pages/CreateAccount";
+// import AddProduct from "./products/pages/AddProduct";
 import Error from "./shared/Error";
-import { useState, useContext } from "react";
+import { useState, useContext, lazy } from "react";
 import CartContext from "./shared/context/cart-context";
 import AuthContext from "./shared/context/auth-context";
-import React from "react";
+import React, { Suspense } from "react";
 import axios from "axios";
 import IsAuth from "./auth/components/isAuth";
 import IsAdmin from "./auth/components/isAdmin";
@@ -24,6 +24,12 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Loading from "./shared/components/Navigation/Loading";
 
+const Login = lazy(() => import("./auth/pages/Login"));
+const Orders = lazy(() => import("./user/pages/Orders"));
+const Products = lazy(() => import("./products/pages/Products"));
+const Order = lazy(() => import("./user/pages/Order"));
+const CreateAccount = lazy(() => import("./auth/pages/CreateAccount"));
+const AddProduct = lazy(() => import("./products/pages/AddProduct"));
 
 const theme = createTheme();
 let first = true;
@@ -89,7 +95,9 @@ const App = () => {
 
   const connectToDb = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/products/`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/products/`
+      );
 
       setProducts(response.data.products);
       setProduct(response.data.products);
@@ -225,12 +233,12 @@ const App = () => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Fragment>
-          <MainNavigation
-            onchangeHandler={changeHandler}
-            value={search}
-            getResponse={getResponse}
-          />
+        <MainNavigation
+          onchangeHandler={changeHandler}
+          value={search}
+          getResponse={getResponse}
+        />
+        <Suspense fallback={<Loading />}>
           <Grid container>
             <Switch>
               <Route path="/" exact>
@@ -320,7 +328,7 @@ const App = () => {
               </Route>
             </Switch>
           </Grid>
-        </Fragment>
+        </Suspense>
       </ThemeProvider>
     </Router>
   );
