@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SideDrwaer from "./shared/components/Navigation/SideDrawer";
