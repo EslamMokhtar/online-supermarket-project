@@ -16,7 +16,8 @@ import IsLogin from "./auth/components/isLogin";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Loading from "./shared/components/Navigation/Loading";
-
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 const Login = lazy(() => import("./auth/pages/Login"));
 const Orders = lazy(() => import("./user/pages/Orders"));
@@ -24,7 +25,15 @@ const Products = lazy(() => import("./products/pages/Products"));
 const Order = lazy(() => import("./user/pages/Order"));
 const CreateAccount = lazy(() => import("./auth/pages/CreateAccount"));
 const AddProduct = lazy(() => import("./products/pages/AddProduct"));
-
+const firebaseConfig = {
+  apiKey: "AIzaSyCuhcwssVD0wcRLHfPJJx39usiG57Ii79w",
+  authDomain: "online-supermarket-f7555.firebaseapp.com",
+  projectId: "online-supermarket-f7555",
+  storageBucket: "online-supermarket-f7555.appspot.com",
+  messagingSenderId: "777714888819",
+  appId: "1:777714888819:web:2518f9a52d9b513ca73a06",
+  measurementId: "G-CWJND2CSFH",
+};
 const theme = createTheme();
 let first = true;
 let logoutTimer;
@@ -45,7 +54,8 @@ const App = () => {
     message: "",
     error: false,
   });
-
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
   React.useEffect(() => {
     const check = async () => {
