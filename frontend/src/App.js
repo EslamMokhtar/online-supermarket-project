@@ -26,13 +26,13 @@ const Order = lazy(() => import("./user/pages/Order"));
 const CreateAccount = lazy(() => import("./auth/pages/CreateAccount"));
 const AddProduct = lazy(() => import("./products/pages/AddProduct"));
 const firebaseConfig = {
-  apiKey: "AIzaSyCuhcwssVD0wcRLHfPJJx39usiG57Ii79w",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "online-supermarket-f7555.firebaseapp.com",
   projectId: "online-supermarket-f7555",
   storageBucket: "online-supermarket-f7555.appspot.com",
-  messagingSenderId: "777714888819",
-  appId: "1:777714888819:web:2518f9a52d9b513ca73a06",
-  measurementId: "G-CWJND2CSFH",
+  messagingSenderId: process.env.REACT_APP_SENDER_ID,
+  appId: process.env.REACT_APP_API_ID,
+  measurementId: process.env.REACT_APP_MEASURMENT_ID,
 };
 const theme = createTheme();
 let first = true;
@@ -49,6 +49,7 @@ const App = () => {
   const [products, setProduct] = useState(items);
   const [search, setSearch] = useState("");
   const [itemsHome, setItems] = useState(items);
+  const [firstLoading, setFirstLoading] = useState(first);
   const [alert, setAlert] = useState({
     show: false,
     message: "",
@@ -79,14 +80,19 @@ const App = () => {
             new Date(storedData.expiration),
             response.data.admin
           );
+        } else {
+          handleLogout();
         }
         first = false;
+        setFirstLoading(first);
       } catch (err) {
+        handleLogout();
         first = false;
+        setFirstLoading(first);
       }
     };
     check();
-  }, [handleLogin]);
+  }, [handleLogin, handleLogout]);
 
   React.useEffect(() => {
     if (token && tokenExpirationDate) {
@@ -229,7 +235,7 @@ const App = () => {
     return (
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={first}
+        open={firstLoading}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
