@@ -17,6 +17,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Loading from "./shared/components/Navigation/Loading";
 
+
 const Login = lazy(() => import("./auth/pages/Login"));
 const Orders = lazy(() => import("./user/pages/Orders"));
 const Products = lazy(() => import("./products/pages/Products"));
@@ -44,6 +45,7 @@ const App = () => {
     message: "",
     error: false,
   });
+
 
   React.useEffect(() => {
     const check = async () => {
